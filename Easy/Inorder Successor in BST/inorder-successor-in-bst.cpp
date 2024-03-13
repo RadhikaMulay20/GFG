@@ -110,53 +110,80 @@ struct Node {
 class Solution{
   public:
     // returns the inorder successor of the Node x in BST (rooted at 'root')
-    void inOrderTraversal(Node *root, vector <int> &result){
+    // void inOrderTraversal(Node *root, vector <int> &result){
         
-        if(root==NULL){
-            return;
-        }
+    //     if(root==NULL){
+    //         return;
+    //     }
         
-        inOrderTraversal(root->left, result);
-        result.push_back(root->data);
-        inOrderTraversal(root->right, result);
-    }
+    //     inOrderTraversal(root->left, result);
+    //     result.push_back(root->data);
+    //     inOrderTraversal(root->right, result);
+    // }
     
     Node * inOrderSuccessor(Node *root, Node *x)
     {
         //Your code here
-        if (x == NULL || root == NULL) {
-            return NULL;
+        // if (x == NULL || root == NULL) {
+        //     return NULL;
+        // }
+        // vector<int> result;
+        // inOrderTraversal(root, result);
+        
+        
+        // auto it = find(result.begin(), result.end(), x->data);
+        
+        // if (it == result.end() || it + 1 == result.end()) {
+        //     return NULL;
+        // }
+        
+        // int successorValue = *(it + 1);
+        // return findNode(root, successorValue);
+        
+        Node* successor = NULL;
+
+        while (root != NULL) {
+            if (x->data < root->data) {
+                successor = root;
+                root = root->left;
+            } else if (x->data > root->data) {
+                root = root->right;
+            } else {
+                // Node x is found
+                if (root->right != NULL) {
+                    // If x has a right subtree, find the leftmost node in the right subtree
+                    successor = findMin(root->right);
+                }
+                break;
+            }
         }
-        vector<int> result;
-        inOrderTraversal(root, result);
-        
-        
-        auto it = find(result.begin(), result.end(), x->data);
-        
-        if (it == result.end() || it + 1 == result.end()) {
-            return NULL;
-        }
-        
-        int successorValue = *(it + 1);
-        return findNode(root, successorValue);
+
+        return successor;
         
         
 
     }
     
     
-     Node *findNode(Node *root, int value) {
-        while (root != NULL) {
-            if (root->data == value) {
-                return root;
-            } else if (value < root->data) {
-                root = root->left;
-            } else {
-                root = root->right;
-            }
+    Node* findMin(Node* node) {
+        while (node->left != NULL) {
+            node = node->left;
         }
-        return NULL;
+        return node;
     }
+    
+    //  Node *findNode(Node *root, int value) {
+    //     while (root != NULL) {
+    //         if (root->data == value) {
+    //             return root;
+    //         } else if (value < root->data) {
+    //             root = root->left;
+    //         } else {
+    //             root = root->right;
+    //         }
+    //     }
+    //     return NULL;
+    // }
 
 };
 
